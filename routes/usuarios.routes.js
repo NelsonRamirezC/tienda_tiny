@@ -1,12 +1,12 @@
 import express from 'express';
-import { getUsers, getUser, getUserFilter } from '../controllers/users.controller.js'
+import { getClientes, getCliente, getClientesFilter } from '../controllers/clientes.controller.js'
 const router = express.Router();
 
-router.get("/api/usuarios", getUsers, (req, res) =>{});
+router.get("/api/clientes", getClientes, (req, res) =>{});
 
-router.get("/api/usuarios/:id", getUser, (req, res) =>{});
+router.get("/api/clientes/:id", getCliente, (req, res) =>{});
 
-router.get("/api/filter/usuarios", getUserFilter, (req, res) =>{});
+router.get("/api/filter/clientes", getClientesFilter, (req, res) =>{});
 
 
 
