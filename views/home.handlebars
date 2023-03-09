@@ -1,6 +1,12 @@
 <h1 class="text-center mt-5">Página principal</h1>
 
 
-{{#each productos}}
-    <p>{{this.nombre}}</p>
-{{/each}}
+{{#if error}}
+    <h2 class="text-center mt-3">Lo siento no pudimos cargar los productos, intenta más tarde.</h2>
+    {{else}}
+
+    {{#each productos}}
+        <p>{{this.nombre}}</p>
+    {{/each}}
+
+{{/if }}

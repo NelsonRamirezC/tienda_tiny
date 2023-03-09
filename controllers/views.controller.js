@@ -10,7 +10,7 @@ export const controllerHome = async (req, res) => {
             `);
 
             res.render("home", {
-                productos: productos.rows
+                productos: productos.rows,
             })
     }catch(error){
             res.render("home", {
