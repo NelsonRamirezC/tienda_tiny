@@ -1,21 +1,27 @@
 import db from '../db/db.js'
+import Producto from '../models/productos.model.js';
 
 export const controllerHome = async (req, res) => {
     try{
-        let productos = await db.query(
-            `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock,  ct.nombre as categoria from productos pr
-            inner join categorias ct
-            ON pr.categoria_id = ct.id
-            `);
+        let producto = new Producto();
+        let resultado = producto.getProductos();
+        resultado.then(productos => {
 
-            res.render("home", {
-                productos: productos.rows,
+                res.render("home", {
+                    productos,
+                })
+
+            }).catch(error => {
+                res.render("home", {
+                    error: true,
+                    message: "No se pudo hacer la carga de productos."
+                })
             })
     }catch(error){
-            res.render("home", {
-                error: true
-            })
+        res.render("home", {
+            error: true,
+            message: "Ha ocurrido un error en el servidor."
+        })
     }
 }
 
@@ -25,71 +31,86 @@ export const controllerDetalleProducto = async (req, res) => {
         let regex = /^[0-9]$/;
         if(!regex.test(id)){
             res.render("detalleProducto", {
-                error: true
+                error: true,
+                message:"Ha ingresado un ID no inválido"
             })
         }
 
-        let productos = await db.query(
-            `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
-            inner join categorias ct
-            ON pr.categoria_id = ct.id
-            where pr.id = $1
-            `, [id]);
+        let objProducto = new Producto();
+        let resultado =  objProducto.getProductoPorId(id);
+        resultado.then(producto => {
 
-            res.render("detalleProducto", {
-                producto: productos.rows[0],
+                res.render("detalleProducto", {
+                    producto,
+                })
+
+            }).catch(err => {
+                res.render("detalleProducto", {
+                    error: true,
+                    message: err
+                })
             })
     }catch(error){
             res.render("detalleProducto", {
-                error: true
+                error: true,
+                message: "Ha ocurrido un error al intentar buscar el producto."
             })
     }
 }
 
 export const controllerInventario = async (req, res) => {
     try{
-        let productos = await db.query(
-            `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
-            inner join categorias ct
-            ON pr.categoria_id = ct.id
-            `);
+        let producto = new Producto();
+        let resultado = producto.getProductos();
+        resultado.then(productos => {
 
-            res.render("inventario", {
-                productos: productos.rows,
+                res.render("inventario", {
+                    productos,
+                })
+
+            }).catch(error => {
+                res.render("inventario", {
+                    error: true,
+                    message: "No se pudo hacer la carga de productos."
+                })
             })
     }catch(error){
-            res.render("inventario", {
-                error: true
-            })
+        res.render("inventario", {
+            error: true,
+            message: "Ha ocurrido un error en el servidor."
+        })
     }
 }
 
-export const controllerModificar = async (req, res) => {
+export const controllerVistaModificar = async (req, res) => {
     try{
         let {id} = req.params;
         let regex = /^[0-9]$/;
         if(!regex.test(id)){
-            res.render("detalleProducto", {
-                error: true
+            res.render("modificarProducto", {
+                error: true,
+                message:"Ha ingresado un ID no inválido"
             })
         }
 
-        let productos = await db.query(
-            `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
-            inner join categorias ct
-            ON pr.categoria_id = ct.id
-            where pr.id = $1
-            `, [id]);
+        let objProducto = new Producto();
+        let resultado =  objProducto.getProductoPorId(id);
+        resultado.then(producto => {
 
-            res.render("modificarProducto", {
-                producto: productos.rows[0],
+                res.render("modificarProducto", {
+                    producto,
+                })
+
+            }).catch(err => {
+                res.render("modificarProducto", {
+                    error: true,
+                    message: err
+                })
             })
     }catch(error){
             res.render("modificarProducto", {
-                error: true
+                error: true,
+                message: "Ha ocurrido un error al intentar buscar el producto."
             })
     }
 }
