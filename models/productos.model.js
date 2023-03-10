@@ -67,7 +67,14 @@ class Producto{
 
     deleteProducto(id){
         return new Promise(async (resolve, reject) => {
-            let resultado = await db.query("DELETE ")
+            try{
+                let productoEliminado = await db.query("DELETE FROM productos WHERE id = $1 RETURNING *", [id])
+                resolve(productoEliminado.rows)
+            }catch(error){
+                console.log(error)
+                reject("Error al intentar eliminar el producto.")
+            }
+            
         })
 
     }

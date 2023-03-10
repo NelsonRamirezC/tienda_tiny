@@ -41,21 +41,23 @@
 
 <script>
     const eliminarProducto = (id) => {
-        let confirmacion = confirm("Está seguro de eliminar el producto con id: " + id)
-
+       console.log(id)
+       let confirmacion = confirm("Está seguro de eliminar el producto con id: " + id)
         if(confirmacion){
+
             fetch(`/api/productos/${id}`, {
             method: "DELETE",
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            alert("producto eliminado correctamente");
-            // recarga la página para reflejar el cambio en la tabla de inventario
-            location.reload();
-        })
-        .catch((error) => {
-            alert("Error al intentar eliminar el producto.")
-        });
+            }).then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                if(data.code =! 200){
+                    alert(data.message);
+                }else{
+                    alert(`El producto ${data.data[0].nombre} ha sido eliminado con éxito.`)
+                    location.reload();
+                }
+            })
         }
+
     }
 </script>

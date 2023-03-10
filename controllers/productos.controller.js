@@ -71,13 +71,13 @@ export const deleteProducto = async (req, res) => {
         let objProducto = new Producto();
 
         //hay que terminar
-        let resultado = objProducto.getProductoPorId(id);
+        let resultado = objProducto.deleteProducto(id);
 
         resultado.then(producto => {
-            if(producto.length == 0) return res.status(400).json({code: 203, message:"El producto buscado no existe."})
+            if(producto.length == 0) return res.status(400).json({code: 203, message:"El producto que intenta eliminar no existe."})
         res.status(200).json({code: 200, data: producto})
         }).catch(error => {
-            console.log(error)
+
             res.status(500).json({code: 500, message: error})
         })
 
@@ -86,4 +86,3 @@ export const deleteProducto = async (req, res) => {
     }
 }
 
-deleteProducto
