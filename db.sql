@@ -32,6 +32,10 @@ CREATE TABLE productos(
 	FOREIGN KEY(categoria_id) REFERENCES categorias(id)	
 );
 
+ALTER TABLE productos ADD COLUMN stock int default 0;
+
+ALTER TABLE productos ADD COLUMN descuento decimal default 0;
+
 CREATE TABLE productos_carritos(
 	id serial primary key,
 	carrito_id int NOT NULL,

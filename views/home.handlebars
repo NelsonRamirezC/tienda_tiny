@@ -5,8 +5,17 @@
     <h2 class="text-center mt-3">Lo siento no pudimos cargar los productos, intenta más tarde.</h2>
     {{else}}
 
-    {{#each productos}}
-        <p>{{this.nombre}}</p>
+    <div class="row">
+        {{#each productos}}
+        <div class="col-12 col-md-6 col-lg-4 py-3">
+            {{> cardProducto
+            nombre = this.nombre
+            descripcion = this.descripcion
+            id = this.id
+        
+        }}
+        </div>
     {{/each}}
 
+    </div>
 {{/if }}

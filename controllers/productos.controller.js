@@ -4,7 +4,7 @@ export const getProductos = async (req, res) => {
     try{
         let resultados = await db.query(
             `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, ct.nombre as categoria from productos pr
+            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
             inner join categorias ct
             ON pr.categoria_id = ct.id
             `);
@@ -23,7 +23,7 @@ export const getProducto = async (req, res) => {
         if(!regex.test(id)) return res.status(400).json({code: 200, message:"erorr al ingresar el id, por favor, verifique."})
         let resultados = await db.query(
             `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, ct.nombre as categoria from productos pr
+            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
             inner join categorias ct
             ON pr.categoria_id = ct.id
             where pr.id=$1
@@ -42,7 +42,7 @@ export const getProductosFilter = async (req, res) => {
         let offset = req.query.offset || 0;
         let resultados = await db.query(
             `
-            select pr.id, pr.nombre, pr.descripcion, pr.precio, ct.nombre as categoria from productos pr
+            select pr.id, pr.nombre, pr.descripcion, pr.precio, pr.descuento, pr.stock, ct.nombre as categoria from productos pr
             inner join categorias ct
             ON pr.categoria_id = ct.id
             offset $1 limit $2

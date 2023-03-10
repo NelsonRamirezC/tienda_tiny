@@ -1,0 +1,37 @@
+<h1 class="text-center mt-5">Vista inventario</h1>
+
+
+{{#if error}}
+    <h2 class="text-center mt-3">Lo siento no pudimos cargar los productos, intenta más tarde.</h2>
+    {{else}}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Descuento</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Modificar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each productos}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.nombre}}</td>
+                    <td>{{this.precio}}</td>
+                    <td>{{this.descuento}}</td>
+                    <td>{{this.stock}}</td>
+                    <td><a href="/productos/detalle/moficar/{{this.id}}" class="btn btn-warning">Modificar</a></td>
+
+                </tr>
+            {{/each}}
+        </tbody>
+        </table>
+
+
+
+    </div>
+{{/if }}
